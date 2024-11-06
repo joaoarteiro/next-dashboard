@@ -14,6 +14,7 @@ const Search = ({ placeholder }: SearchProps) => {
 
   const handleSearch = (term: string) => {
     const params = new URLSearchParams(searchParams);
+    params.set("page", "1");
     if (term) {
       params.set("query", term);
     } else {
