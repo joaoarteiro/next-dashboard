@@ -2,6 +2,7 @@
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useDebouncedCallback } from "use-debounce";
 
 type SearchProps = {
   placeholder: string;
@@ -12,7 +13,10 @@ const Search = ({ placeholder }: SearchProps) => {
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const handleSearch = (term: string) => {
+  /* Debouncing is a programming practice that limits the rate at which a function can fire.
+   This particular function will only execute 350ms after the user has stopped typing.
+   This way, we can reduce the number of uncessary API calls */
+  const handleSearch = useDebouncedCallback((term: string) => {
     const params = new URLSearchParams(searchParams);
     params.set("page", "1");
     if (term) {
@@ -21,7 +25,7 @@ const Search = ({ placeholder }: SearchProps) => {
       params.delete("query");
     }
     replace(`${pathname}?${params.toString()}`);
-  };
+  }, 350);
 
   return (
     <div className="relative flex flex-1 flex-shrink-0">
