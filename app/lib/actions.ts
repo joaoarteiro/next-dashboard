@@ -5,7 +5,7 @@ import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-const FormSchema = z.object({
+const InvoiceFormSchema = z.object({
   id: z.string(),
   customerId: z.string({
     invalid_type_error: "Please select a customer.",
@@ -19,6 +19,19 @@ const FormSchema = z.object({
   date: z.string(),
 });
 
+const CustomerFormSchema = z.object({
+  id: z.string(),
+  name: z.string({
+    invalid_type_error: "Please enter a name.",
+  }),
+  email: z.string({
+    invalid_type_error: "Please enter an email.",
+  }),
+  image: z.string({
+    invalid_type_error: "Please select an image.",
+  }),
+});
+
 export type State = {
   errors?: {
     customerId?: string[];
@@ -28,8 +41,9 @@ export type State = {
   message?: string | null;
 };
 
-const CreateInvoice = FormSchema.omit({ id: true, date: true });
-const UpdateInvoice = FormSchema.omit({ id: true, date: true });
+const CreateInvoice = InvoiceFormSchema.omit({ id: true, date: true });
+const UpdateInvoice = InvoiceFormSchema.omit({ id: true, date: true });
+const CreateCustomer = CustomerFormSchema.omit({ id: true });
 
 export const createInvoice = async (prevState: State, formData: FormData) => {
   // Validate form using Zod
@@ -107,4 +121,37 @@ export const deleteInvoice = async (id: string) => {
   } catch (error) {
     return { message: "Database Error: Failed to Delete Invoice" };
   }
+};
+
+export const createCustomer = async (formData: FormData) => {
+  // Validate form using Zod
+  const validatedFields = CreateCustomer.safeParse({
+    name: formData.get("name"),
+    email: formData.get("email"),
+    image: formData.get("image"),
+  });
+
+  // If form validation fails, return errors early. Otherwise, continue.
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed to Create Invoice.",
+    };
+  }
+
+  const { name, email, image } = validatedFields.data;
+
+  try {
+    await sql`
+  INSERT INTO customers (name, email, image_url)
+  VALUES (${name}, ${email}, ${image})
+`;
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Create Customer.",
+    };
+  }
+
+  revalidatePath("/dashboard/customers");
+  redirect("/dashboard/customers");
 };
