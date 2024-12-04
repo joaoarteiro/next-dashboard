@@ -155,3 +155,13 @@ export const createCustomer = async (formData: FormData) => {
   revalidatePath("/dashboard/customers");
   redirect("/dashboard/customers");
 };
+
+export const deleteCustomer = async (id: string) => {
+  try {
+    await sql`DELETE FROM customers WHERE id = ${id}`;
+    revalidatePath("/dashboard/customers");
+    return { message: "Deleted Customer." };
+  } catch (error) {
+    return { message: "Database Error: Failed to Delete Customer" };
+  }
+};
