@@ -15,12 +15,12 @@ import { usePathname } from "next/navigation";
 const links = [
   { name: "Dashboard", href: "/dashboard", icon: HomeIcon },
   {
-    name: "Resources",
+    name: "Invoices",
     href: "/dashboard/invoices",
     icon: UserGroupIcon,
   },
   {
-    name: "Projects",
+    name: "Customers",
     href: "/dashboard/customers",
     icon: ClipboardIcon,
   },

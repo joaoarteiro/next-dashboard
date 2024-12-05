@@ -43,7 +43,7 @@ const Selector = ({ label, options, defaultOption }: SelectorProps) => {
         onChange={(e) => handleSelect(e.target.value)}
       >
         {options.map((option) => (
-          <MenuItem key={option} value={option}>
+          <MenuItem key={option} value={option} sx={{ fontSize: "0.875rem" }}>
             {option}
           </MenuItem>
         ))}
