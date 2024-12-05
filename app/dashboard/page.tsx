@@ -1,14 +1,15 @@
-import { Card } from "@/app/ui/dashboard/cards";
 import RevenueChart from "@/app/ui/dashboard/revenue-chart";
 import LatestInvoices from "@/app/ui/dashboard/latest-invoices";
+import CardWrapper from "@/app/ui/dashboard/cards";
+import PieGraph from "@/app/ui/dashboard/pie-chart";
 import { lusitana } from "@/app/ui/fonts";
 import { Suspense } from "react";
 import {
   LatestInvoicesSkeleton,
   RevenueChartSkeleton,
   CardsSkeleton,
+  PieGraphSkeleton,
 } from "../ui/skeletons";
-import CardWrapper from "@/app/ui/dashboard/cards";
 
 const Page = async () => {
   return (
@@ -25,8 +26,14 @@ const Page = async () => {
         <Suspense fallback={<RevenueChartSkeleton />}>
           <RevenueChart />
         </Suspense>
+
         <Suspense fallback={<LatestInvoicesSkeleton />}>
           <LatestInvoices />
+        </Suspense>
+      </div>
+      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
+        <Suspense fallback={<PieGraphSkeleton />}>
+          <PieGraph />
         </Suspense>
       </div>
     </main>
