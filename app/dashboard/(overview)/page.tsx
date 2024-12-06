@@ -9,7 +9,7 @@ import {
   RevenueChartSkeleton,
   CardsSkeleton,
   PieGraphSkeleton,
-} from "../ui/skeletons";
+} from "../../ui/skeletons";
 
 const Page = async () => {
   return (
