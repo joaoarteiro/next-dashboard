@@ -96,6 +96,7 @@ export async function fetchFilteredInvoices(
   status: string
 ) {
   const offset = (currentPage - 1) * INVOICES_PER_PAGE;
+  console.log("called fetchFiltered");
 
   try {
     const invoices = await sql<InvoicesTable>`
@@ -220,6 +221,8 @@ export async function fetchFilteredCustomers(
   currentPage: number
 ) {
   const offset = (currentPage - 1) * CUSTOMERS_PER_PAGE;
+
+  console.log("Called fetchfilteredCustomers");
 
   try {
     const data = await sql<CustomersTableType>`
