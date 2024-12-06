@@ -7,10 +7,11 @@ import { fetchFilteredInvoices } from "@/app/lib/data";
 type TableProps = {
   query: string;
   currentPage: number;
+  status: string;
 };
 
-const InvoicesTable = async ({ query, currentPage }: TableProps) => {
-  const invoices = await fetchFilteredInvoices(query, currentPage);
+const InvoicesTable = async ({ query, currentPage, status }: TableProps) => {
+  const invoices = await fetchFilteredInvoices(query, currentPage, status);
 
   return (
     <div className="mt-6 flow-root">
