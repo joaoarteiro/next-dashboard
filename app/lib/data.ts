@@ -86,32 +86,33 @@ export async function fetchCardData() {
 const INVOICES_PER_PAGE = 6;
 export async function fetchFilteredInvoices(
   query: string,
-  currentPage: number
+  currentPage: number,
+  status: string
 ) {
   const offset = (currentPage - 1) * INVOICES_PER_PAGE;
 
   try {
     const invoices = await sql<InvoicesTable>`
       SELECT
-        invoices.id,
-        invoices.amount,
-        invoices.date,
-        invoices.status,
-        customers.name,
-        customers.email,
-        customers.image_url
+      invoices.id,
+      invoices.amount,
+      invoices.date,
+      invoices.status,
+      customers.name,
+      customers.email,
+      customers.image_url
       FROM invoices
       JOIN customers ON invoices.customer_id = customers.id
       WHERE
-        customers.name ILIKE ${`%${query}%`} OR
-        customers.email ILIKE ${`%${query}%`} OR
-        invoices.amount::text ILIKE ${`%${query}%`} OR
-        invoices.date::text ILIKE ${`%${query}%`} OR
-        invoices.status ILIKE ${`%${query}%`}
+      (customers.name ILIKE ${`%${query}%`} OR
+      customers.email ILIKE ${`%${query}%`} OR
+      invoices.amount::text ILIKE ${`%${query}%`} OR
+      invoices.date::text ILIKE ${`%${query}%`} OR
+      invoices.status ILIKE ${`%${query}%`})
+      AND (invoices.status = ${status} OR ${status} = '')
       ORDER BY invoices.date DESC
       LIMIT ${INVOICES_PER_PAGE} OFFSET ${offset}
     `;
-
     return invoices.rows;
   } catch (error) {
     console.error("Database Error:", error);
@@ -119,17 +120,18 @@ export async function fetchFilteredInvoices(
   }
 }
 
-export async function fetchInvoicesPages(query: string) {
+export async function fetchInvoicesPages(query: string, status: string) {
   try {
     const count = await sql`SELECT COUNT(*)
     FROM invoices
     JOIN customers ON invoices.customer_id = customers.id
     WHERE
-      customers.name ILIKE ${`%${query}%`} OR
+      (customers.name ILIKE ${`%${query}%`} OR
       customers.email ILIKE ${`%${query}%`} OR
       invoices.amount::text ILIKE ${`%${query}%`} OR
       invoices.date::text ILIKE ${`%${query}%`} OR
-      invoices.status ILIKE ${`%${query}%`}
+      invoices.status ILIKE ${`%${query}%`})
+      AND (invoices.status = ${status} OR ${status} = '')
   `;
 
     const totalPages = Math.ceil(
