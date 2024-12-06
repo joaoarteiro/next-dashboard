@@ -10,6 +10,8 @@ import {
 import { formatCurrency } from "./utils";
 
 export async function fetchRevenue() {
+  console.log("Fetching Revenue Data");
+
   try {
     // Artificially delay a response for demo purposes.
     // Don't do this in production :)
@@ -26,6 +28,8 @@ export async function fetchRevenue() {
 }
 
 export async function fetchLatestInvoices() {
+  console.log("Fetching Latests Invoices");
+
   try {
     const data = await sql<LatestInvoiceRaw>`
       SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
@@ -46,6 +50,8 @@ export async function fetchLatestInvoices() {
 }
 
 export async function fetchCardData() {
+  console.log("Calling fetchCardData");
+
   try {
     // You can probably combine these into a single SQL query
     // However, we are intentionally splitting them to demonstrate
