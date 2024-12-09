@@ -4,10 +4,9 @@ export default function AccentureLogo() {
     <Image
       src="/acclogo.png"
       alt="Accenture logo"
-      width={200}
-      height={200}
+      width={160}
+      height={160}
       style={{ objectFit: "contain" }}
-      layout="intrinsic"
       priority
     />
   );
