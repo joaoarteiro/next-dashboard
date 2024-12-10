@@ -6,6 +6,7 @@ import {
   UserGroupIcon,
   HomeIcon,
   DocumentCurrencyEuroIcon,
+  ChartPieIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -23,6 +24,11 @@ const links = [
     name: "Customers",
     href: "/dashboard/customers",
     icon: UserGroupIcon,
+  },
+  {
+    name: "Statistics",
+    href: "/dashboard/statistics",
+    icon: ChartPieIcon,
   },
 ];
 
