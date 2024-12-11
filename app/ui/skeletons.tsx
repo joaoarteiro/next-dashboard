@@ -236,3 +236,20 @@ export function PieGraphSkeleton() {
     </div>
   );
 }
+
+export function PieChartSkeletonServerSide() {
+  return (
+    <div className="w-full md:col-span-4">
+      <div className={`${shimmer} mb-4 h-8 w-36 rounded-md bg-gray-100`} />
+      <div className="rounded-xl bg-gray-100 p-4">
+        <div className="flex flex-col items-center justify-center bg-white py-4 gap-y-2">
+          <div className="flex flex-row items-center gap-x-2">
+            <div className="h-5 w-20 rounded-md bg-gray-200" />
+            <div className="h-5 w-20 rounded-md bg-gray-200" />
+          </div>
+          <div className="h-44 w-44 rounded-full bg-gray-200" />
+        </div>
+      </div>
+    </div>
+  );
+}

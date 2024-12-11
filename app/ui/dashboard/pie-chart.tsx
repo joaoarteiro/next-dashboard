@@ -19,7 +19,7 @@ const PieGraph = async () => {
       </h2>
 
       <div className="rounded-xl bg-gray-50 p-4">
-        <div className="flex items-center justify-center bg-white py-4">
+        <div className="flex items-center justify-center bg-white py-4 h-60">
           <PieChart
             series={[
               {
