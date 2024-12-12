@@ -26,7 +26,11 @@ const LatestInvoices = async () => {
               >
                 <div className="flex items-center">
                   <Image
-                    src={invoice.image_url}
+                    src={
+                      invoice.image_url
+                        ? invoice.image_url
+                        : "/customers/default.png"
+                    }
                     alt={`${invoice.name}'s profile picture`}
                     className="mr-4 rounded-full"
                     width={32}
