@@ -28,7 +28,11 @@ const CustomersList = async ({ query, currentPage }: CustomersListProps) => {
               >
                 <div className="flex items-center">
                   <Image
-                    src={customer.image_url}
+                    src={
+                      customer.image_url
+                        ? customer.image_url
+                        : "/customers/default.png"
+                    }
                     alt={`${customer.name}'s profile picture`}
                     className="mr-4 rounded-full"
                     width={32}

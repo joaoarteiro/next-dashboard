@@ -22,7 +22,7 @@ const InvoiceTable = async ({ query, status, currentPage }: TableProps) => {
     customer: (
       <div className="flex items-center gap-3">
         <Image
-          src={invoice.image_url}
+          src={invoice.image_url ? invoice.image_url : "/customers/default.png"}
           className="rounded-full"
           width={28}
           height={28}
