@@ -215,8 +215,6 @@ export async function fetchFilteredCustomers(
 ) {
   const offset = (currentPage - 1) * CUSTOMERS_PER_PAGE;
 
-  console.log("Called fetchfilteredCustomers");
-
   try {
     const data = await sql<CustomersTableType>`
 		SELECT
@@ -247,5 +245,34 @@ export async function fetchFilteredCustomers(
   } catch (err) {
     console.error("Database Error:", err);
     throw new Error("Failed to fetch customer table.");
+  }
+}
+
+export async function fetchCustomerInvoices() {
+  try {
+    const data = await sql`
+		SELECT
+		  customers.id,
+		  customers.name,
+		  COUNT(invoices.id) AS total_invoices,
+		  SUM(CASE WHEN invoices.status = 'pending' THEN invoices.amount ELSE 0 END) AS total_pending,
+		  SUM(CASE WHEN invoices.status = 'paid' THEN invoices.amount ELSE 0 END) AS total_paid
+		FROM customers
+		LEFT JOIN invoices ON customers.id = invoices.customer_id
+		GROUP BY customers.id, customers.name
+		ORDER BY total_invoices DESC
+    LIMIT 6
+	  `;
+    const customers = data.rows.map((customer) => ({
+      name: customer.name,
+      total_invoices: customer.total_invoices,
+      total_pending: formatCurrency(customer.total_pending),
+      total_paid: formatCurrency(customer.total_paid),
+    }));
+
+    return customers;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch the latest invoices.");
   }
 }
