@@ -3,6 +3,7 @@ import StatisticsBarChart from "@/app/ui/statistics/bar-chart";
 import PieGraph from "@/app/ui/dashboard/pie-chart";
 import PieChart from "@/app/ui/statistics/pie-chart";
 import ApexChart from "@/app/ui/statistics/apex-chart";
+import MoviesChart from "@/app/ui/statistics/movies-chart";
 import { lusitana } from "@/app/ui/fonts";
 import { Suspense } from "react";
 import {
@@ -28,13 +29,14 @@ const Page = async () => {
         </Suspense>
       </div>
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
-        <Suspense fallback={<PieGraphSkeleton />}>
-          <PieGraph />
-        </Suspense>
+        {/* <Suspense fallback={<PieGraphSkeleton />}>
+          <MoviesChart />
+        </Suspense> */}
         <Suspense fallback={<PieChartSkeletonServerSide />}>
           <PieChart />
         </Suspense>
       </div>
+      <MoviesChart />
     </main>
   );
 };
