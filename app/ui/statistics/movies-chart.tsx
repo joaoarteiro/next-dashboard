@@ -3,12 +3,11 @@
 import { useEffect, useState } from "react";
 import { ApexOptions } from "apexcharts";
 import { lusitana } from "@/app/ui/fonts";
-import Chart from "react-apexcharts";
 
-/* import dynamic from "next/dynamic";
+import dynamic from "next/dynamic";
 
 // Dynamically import ApexCharts with SSR disabled for Next.js compatibility
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false }); */
+const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 const MoviesChart = () => {
   const [topMovies, setTopMovies] = useState([]);
