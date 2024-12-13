@@ -62,16 +62,14 @@ const MoviesChart = () => {
   useEffect(() => {
     const fetchMovies = async () => {
       setIsLoading(true);
-      /* const Authorization: string | undefined =
-        process.env.TMDB_ACCESS_TOKEN || ""; */
+      const apiKey = process.env.TMDB_ACCESS_TOKEN || "";
 
       const options = {
         method: "GET",
         headers: {
           "Cache-Control": "no-store",
           accept: "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZGM4MGM4YTI1ZTQ5OTMwODE0ZDRlM2I2Mzg5ZjU0NyIsIm5iZiI6MTU4NDQ2MTA1NC4xMTAwMDAxLCJzdWIiOiI1ZTcwZjRmZTJmM2IxNzAwMTk0ODZmZjIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.YTvDw0iXBtq_XKcCNS75ueKVvnU6TakBj1teWM-j4xA",
+          Authorization: `Bearer ${apiKey}`,
         },
       };
 
