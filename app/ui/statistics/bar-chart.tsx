@@ -9,7 +9,7 @@ const StatisticsBarChart = async () => {
     labels: revenue.map((month) => month.month),
     datasets: [
       {
-        label: "Number of Revenues",
+        label: "Monthly Revenue",
         data: revenue.map((revenue) => revenue.revenue),
         backgroundColor: revenue.map(() => "rgb(147 197 253)"),
       },
